@@ -44,7 +44,7 @@ class Maze
     		// Méthodes utilitaires
 		void changeCharToBuildMap();
 		void displayMap();
-		void possibleDeplacements();
+		void deplacementsToResolve();
 };
 
 // mes fonctions, méthodes ci-dessous
@@ -94,26 +94,96 @@ void Maze::changeCharToBuildMap()
 }
 
 // ma fonction de déplacements possibles en fonction de ma situation
-void Maze::possibleDeplacements()
+void Maze::deplacementsToResolve()
 {
-	char direction[4] = {'N', 'S', 'E', 'O'}; // mes 4 directions possibles
-	random_device rd;
-	uniform_int_distribution<int> distribution(0, 3); // uniforme pour avoir les memes chances de tomber sur 0 ou 1 ou 2 ou 3
-	int pas = distribution(rd);
+	//0 = N; 1 = S; 2 = E; 3 = O
+	//tant qu'on a pas atteint la sortie alors on boucle sur un nouveau random de déplacement
+	
+	int i = 1;// car on démarre sur cette case
+	int cpt = 0;// mon compteur de déplacements, me sert à évaluer les ressources dépensées pour sortir
 
-	// initialisation de chaque int random vaut une direction
-	if (pas == 0)
+	while (_map[i] != 3)
 	{
-		
+		random_device rd;
+		uniform_int_distribution<int> distribution(0, 3); // uniforme pour avoir les memes chances de tomber sur 0 ou 1 ou 2 ou 3
+		int pas = distribution(rd);
+
+		// initialisation de chaque int random vaut une direction
+		switch(pas)
+		{
+			case 0:
+				//déplacement vers 1 case nord
+				//condition
+        			if (_map[i-21] != 1 && i-21 >= 0)
+        			{
+                			i = i-21;
+        			}
+        			else
+        			{
+                			cout << "Not possible to go up.";
+        			}
+				displayMap();
+				cout << " i : " << i << endl;
+				break;
+			case 1:
+				//déplacement vers 1 case sud
+				//condition
+        			if (_map[i+21] != 1)
+        			{
+                			i = i+21;
+        			}
+        			else
+        			{
+                			cout << "Not possible to go down.";
+        			}
+				displayMap();
+				cout << " i : " << i << endl;
+				break;
+			case 2:
+				//déplacement vers 1 case est
+				//condition
+        			if (_map[i+1] != 1)
+        			{
+                			i = i+1;
+        			}
+        			else
+        			{
+                			cout << "Not possible to go right.";
+        			}
+				displayMap();
+				cout << " i : " << i << endl;
+				break;
+			case 3:
+				//déplacement vers 1 case ouest
+				//condition
+        			if (_map[i-1] != 1)
+        			{
+                			i = i-1;
+        			}
+        			else
+        			{
+                			cout << "Not possible to go left.";
+        			}
+				displayMap();
+				cout << " i : " << i << endl;
+				break;
+			default:
+				break;
+		}
+		cpt++;//+1 au compteur de déplacements
 	}
+	cout << " i-position : " << i << endl;
+	cout << "Sortie trouvée par le numéro : " << _map[i] << endl;
+	cout << "Déplacements effectués pour arriver à la sortie : " << cpt << endl;
 }
+
 
 int main() {
 	//Création de mon objet Maze
 	Maze m("source.mz");
 	m.changeCharToBuildMap();// appel de fonction pour changer mes chiffres en "char"
-	m.displayMap();// appel de fonction pour afficher ma map
-	m.possibleDeplacements();
+	//m.displayMap();// appel de fonction pour afficher ma map
+	m.deplacementsToResolve();
 	return 0;
 }
 
