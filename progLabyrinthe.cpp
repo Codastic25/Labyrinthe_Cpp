@@ -2,6 +2,7 @@
 #include<fstream> // bibliotheque qui me permet de lire et ecrire dans un fichier
 #include<cstring> // bibliotheque qui me permet de bénéficier des fonctions de manipulation de string
 #include<random> // module de random
+#include<cstdlib> // module pour systeme et actualiser la map au lieu de l'afficher un tas de fois
 
 using namespace std;
 
@@ -43,7 +44,7 @@ class Maze
 
     		// Méthodes utilitaires
 		void changeCharToBuildMap();
-		void displayMap();
+		void displayMap(int positionActuelle);
 		void deplacementsToResolve();
 };
 
@@ -51,15 +52,24 @@ class Maze
 //Comme ca je partitionne bien et le jour ou je dois mettre les methodes dans un .h, ce sera possible
 
 // ma fonction qui me permet d'afficher la map initiale
-void Maze::displayMap()
+void Maze::displayMap(int positionActuelle)
 {
+	system("clear");// pour maj la map a chaque fois
+
 	for (int i = 0; i < 21*12; i++)
 	{
 		if (i % 21 == 0)
 		{
 			cout << endl;
 		}
-		cout << _mapChar[i];
+		if (i == positionActuelle)
+		{
+			cout << "🟦";// affichage de mon personnage
+		}
+		else
+		{
+			cout << _mapChar[i];// sinon affichage du caractère à sa bonne place
+		}
 	}
 	cout << endl;
 }
@@ -99,7 +109,18 @@ void Maze::deplacementsToResolve()
 	//0 = N; 1 = S; 2 = E; 3 = O
 	//tant qu'on a pas atteint la sortie alors on boucle sur un nouveau random de déplacement
 	
-	int i = 1;// car on démarre sur cette case
+	int i = 0;// car on démarre sur cette case
+	// boucle pour toujours trouver la case de départ
+	
+	for (int k = 0; k < 21*12; k++)
+	{
+		if (_map[k] == 2)
+		{
+			i = k;
+			break;
+		}
+	}
+
 	int cpt = 0;// mon compteur de déplacements, me sert à évaluer les ressources dépensées pour sortir
 
 	while (_map[i] != 3)
@@ -122,7 +143,7 @@ void Maze::deplacementsToResolve()
         			{
                 			cout << "Not possible to go up.";
         			}
-				displayMap();
+				//displayMap(i);
 				cout << " i : " << i << endl;
 				break;
 			case 1:
@@ -136,7 +157,7 @@ void Maze::deplacementsToResolve()
         			{
                 			cout << "Not possible to go down.";
         			}
-				displayMap();
+				//displayMap(i);
 				cout << " i : " << i << endl;
 				break;
 			case 2:
@@ -150,7 +171,7 @@ void Maze::deplacementsToResolve()
         			{
                 			cout << "Not possible to go right.";
         			}
-				displayMap();
+				//displayMap(i);
 				cout << " i : " << i << endl;
 				break;
 			case 3:
@@ -164,12 +185,13 @@ void Maze::deplacementsToResolve()
         			{
                 			cout << "Not possible to go left.";
         			}
-				displayMap();
+				//displayMap(i);
 				cout << " i : " << i << endl;
 				break;
 			default:
 				break;
 		}
+		displayMap(i); // affichage unique de la map car elle se met à jour ensuite dans display
 		cpt++;//+1 au compteur de déplacements
 	}
 	cout << " i-position : " << i << endl;
@@ -182,7 +204,6 @@ int main() {
 	//Création de mon objet Maze
 	Maze m("source.mz");
 	m.changeCharToBuildMap();// appel de fonction pour changer mes chiffres en "char"
-	//m.displayMap();// appel de fonction pour afficher ma map
 	m.deplacementsToResolve();
 	return 0;
 }
