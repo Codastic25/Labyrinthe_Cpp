@@ -123,12 +123,14 @@ void Maze::deplacementsToResolve()
                 			i = i-21;
 					cpt++;
         			}
+				/*
         			else
         			{
                 			cout << "Not possible to go up.";
         			}
 				//displayMap(i);
 				cout << " i : " << i << endl;
+				*/
 				break;
 			case 1:
 				//déplacement vers 1 case sud
@@ -138,12 +140,14 @@ void Maze::deplacementsToResolve()
                 			i = i+21;
 					cpt++;
         			}
+				/*
         			else
         			{
                 			cout << "Not possible to go down.";
         			}
 				//displayMap(i);
 				cout << " i : " << i << endl;
+				*/
 				break;
 			case 2:
 				//déplacement vers 1 case est
@@ -153,12 +157,14 @@ void Maze::deplacementsToResolve()
                 			i = i+1;
 					cpt++;
         			}
+				/*
         			else
         			{
                 			cout << "Not possible to go right.";
         			}
 				//displayMap(i);
 				cout << " i : " << i << endl;
+				*/
 				break;
 			case 3:
 				//déplacement vers 1 case ouest
@@ -168,12 +174,14 @@ void Maze::deplacementsToResolve()
                 			i = i-1;
 					cpt++;
         			}
+				/*
         			else
         			{
                 			cout << "Not possible to go left.";
         			}
 				//displayMap(i);
 				cout << " i : " << i << endl;
+				*/
 				break;
 			default:
 				break;
