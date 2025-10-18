@@ -24,13 +24,13 @@ class Maze
                 // Setters
 
                 // Getters
+		int getPositionEntreeLabyrinthe();
+		int getPositionSortieLabyrinthe();
 
                 // Méthodes utilitaires
                 void changeCharToBuildMap();
                 void displayMap(int positionActuelle);
-                void deplacementsToResolve();
-		void deplacementsProfondeurDabord();
-		bool caseDejaVue(int position);
+		bool obstacle(int positionSouhaitee);
 };
 
 #endif
